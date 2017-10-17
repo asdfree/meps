@@ -10,6 +10,6 @@ meps_cat <-
 which_records <- sample( seq( nrow( meps_cat ) ) , round( nrow( meps_cat ) * 0.75 ) )
 
 # always sample year == 2014
-meps_cat <- unique( rbind( meps_cat[ which_records , ] , subset( meps_cat , year == 2014 ) ) )
+meps_cat <- unique( rbind( meps_cat[ which_records , ] , subset( meps_cat , grepl( 2014 , year ) ) ) )
 
 lodown( "meps" , meps_cat )

@@ -6,8 +6,8 @@ meps_cat <-
 	get_catalog( "meps" ,
 		output_dir = file.path( getwd() ) )
 
-# 2014 only
-meps_cat <- subset( meps_cat , year == 2014 )
+# 2015 only
+meps_cat <- subset( meps_cat , year == 2015 )
 # download the microdata to your local computer
 stopifnot( nrow( meps_cat ) > 0 )
 
@@ -17,11 +17,11 @@ library(survey)
 
 meps_cons_df <- 
 	readRDS( file.path( getwd() , 
-		"2014/full year consolidated.rds" ) )
+		"2015/full year consolidated.rds" ) )
 
 meps_brr <- 
 	readRDS( file.path( getwd() , 
-		"meps 1996-2014 replicates for variance estimation.rds" ) )
+		"meps 1996-2015 replicates for variance estimation.rds" ) )
 
 meps_brr <- 
 	meps_brr[ , 

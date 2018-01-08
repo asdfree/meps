@@ -1,7 +1,5 @@
 if ( .Platform$OS.type == 'windows' ) memory.limit( 256000 )
 
-library(lodown)
-lodown( "meps" , output_dir = file.path( getwd() ) )
 this_sample_break <- Sys.getenv( "this_sample_break" )
 meps_cat <- get_catalog( "meps" , output_dir = file.path( getwd() ) )
 record_categories <- ceiling( seq( nrow( meps_cat ) ) / ceiling( nrow( meps_cat ) / 2 ) )
@@ -17,7 +15,7 @@ meps_cat <-
 # 2015 only
 meps_cat <- subset( meps_cat , year == 2015 )
 # download the microdata to your local computer
-lodown( "meps" , meps_cat )
+
 
 options( survey.replicates.mse = TRUE )
 

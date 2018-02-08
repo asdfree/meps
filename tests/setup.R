@@ -7,17 +7,17 @@ this_sample_break <- Sys.getenv( "this_sample_break" )
 meps_cat <- get_catalog( "meps" , output_dir = file.path( getwd() ) )
 record_categories <- ceiling( seq( nrow( meps_cat ) ) / ceiling( nrow( meps_cat ) / 2 ) )
 meps_cat <- meps_cat[ record_categories == this_sample_break , ]
-lodown( "meps" , meps_cat )
+meps_cat <- lodown( "meps" , meps_cat )
 if( any( grepl( 2015 , meps_cat$year ) ) ){
-library(lodown)
-# examine all available MEPS microdata files
-meps_cat <-
-	get_catalog( "meps" ,
-		output_dir = file.path( getwd() ) )
 
-# 2015 only
-meps_cat <- subset( meps_cat , year == 2015 )
-# download the microdata to your local computer
+
+
+
+
+
+
+
+
 
 
 options( survey.replicates.mse = TRUE )

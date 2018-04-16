@@ -20,8 +20,6 @@ if( any( grepl( 2015 , meps_cat$year ) ) ){
 
 
 
-options( survey.replicates.mse = TRUE )
-
 library(survey)
 
 meps_cons_df <- 
@@ -49,7 +47,8 @@ meps_design <-
 		weights = ~ perwt15f ,
 		type = "BRR" ,
 		combined.weights = FALSE ,
-		repweights = "brr[1-9]+"
+		repweights = "brr[1-9]+" ,
+		mse = TRUE
 	)
 meps_design <- 
 	update( 

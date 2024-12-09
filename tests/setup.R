@@ -20,10 +20,10 @@ meps_sas_import <-
 	}
 
 meps_cons_df <-
-	meps_sas_import( "https://meps.ahrq.gov/data_files/pufs/h224/h224v9.zip" )
+	meps_sas_import( "https://meps.ahrq.gov/mepsweb/data_files/pufs/h243/h243v9.zip" )
 
 meps_brr_df <-
-	meps_sas_import( "https://meps.ahrq.gov/mepsweb/data_files/pufs/h036brr/h36brr20v9.zip" )
+	meps_sas_import( "https://meps.ahrq.gov/mepsweb/data_files/pufs/h036brr/h36brr22v9.zip" )
 meps_df <- merge( meps_cons_df , meps_brr_df )
 
 stopifnot( nrow( meps_df ) == nrow( meps_cons_df ) )

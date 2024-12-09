@@ -37,7 +37,7 @@ library(survey)
 meps_design <-
 	svrepdesign(
 		data = meps_df ,
-		weights = ~ perwt20f ,
+		weights = ~ perwt22f ,
 		type = "BRR" ,
 		combined.weights = FALSE ,
 		repweights = "brr[1-9]+" ,
@@ -49,45 +49,45 @@ meps_design <-
 		
 		one = 1 ,
 		
-		insured_december_31st = ifelse( ins20x %in% 1:2 , as.numeric( ins20x == 1 ) , NA )
+		insured_december_31st = ifelse( ins22x %in% 1:2 , as.numeric( ins22x == 1 ) , NA )
 		
 	)
 sum( weights( meps_design , "sampling" ) != 0 )
 
-svyby( ~ one , ~ region20 , meps_design , unwtd.count )
+svyby( ~ one , ~ region22 , meps_design , unwtd.count )
 svytotal( ~ one , meps_design )
 
-svyby( ~ one , ~ region20 , meps_design , svytotal )
-svymean( ~ totexp20 , meps_design )
+svyby( ~ one , ~ region22 , meps_design , svytotal )
+svymean( ~ totexp22 , meps_design )
 
-svyby( ~ totexp20 , ~ region20 , meps_design , svymean )
+svyby( ~ totexp22 , ~ region22 , meps_design , svymean )
 svymean( ~ sex , meps_design )
 
-svyby( ~ sex , ~ region20 , meps_design , svymean )
-svytotal( ~ totexp20 , meps_design )
+svyby( ~ sex , ~ region22 , meps_design , svymean )
+svytotal( ~ totexp22 , meps_design )
 
-svyby( ~ totexp20 , ~ region20 , meps_design , svytotal )
+svyby( ~ totexp22 , ~ region22 , meps_design , svytotal )
 svytotal( ~ sex , meps_design )
 
-svyby( ~ sex , ~ region20 , meps_design , svytotal )
-svyquantile( ~ totexp20 , meps_design , 0.5 )
+svyby( ~ sex , ~ region22 , meps_design , svytotal )
+svyquantile( ~ totexp22 , meps_design , 0.5 )
 
 svyby( 
-	~ totexp20 , 
-	~ region20 , 
+	~ totexp22 , 
+	~ region22 , 
 	meps_design , 
 	svyquantile , 
 	0.5 ,
 	ci = TRUE 
 )
 svyratio( 
-	numerator = ~ totmcd20 , 
-	denominator = ~ totexp20 , 
+	numerator = ~ totmcd22 , 
+	denominator = ~ totexp22 , 
 	meps_design 
 )
 sub_meps_design <- subset( meps_design , agelast >= 65 )
-svymean( ~ totexp20 , sub_meps_design )
-this_result <- svymean( ~ totexp20 , meps_design )
+svymean( ~ totexp22 , sub_meps_design )
+this_result <- svymean( ~ totexp22 , meps_design )
 
 coef( this_result )
 SE( this_result )
@@ -96,8 +96,8 @@ cv( this_result )
 
 grouped_result <-
 	svyby( 
-		~ totexp20 , 
-		~ region20 , 
+		~ totexp22 , 
+		~ region22 , 
 		meps_design , 
 		svymean 
 	)
@@ -107,22 +107,22 @@ SE( grouped_result )
 confint( grouped_result )
 cv( grouped_result )
 degf( meps_design )
-svyvar( ~ totexp20 , meps_design )
+svyvar( ~ totexp22 , meps_design )
 # SRS without replacement
-svymean( ~ totexp20 , meps_design , deff = TRUE )
+svymean( ~ totexp22 , meps_design , deff = TRUE )
 
 # SRS with replacement
-svymean( ~ totexp20 , meps_design , deff = "replace" )
+svymean( ~ totexp22 , meps_design , deff = "replace" )
 svyciprop( ~ insured_december_31st , meps_design ,
 	method = "likelihood" , na.rm = TRUE )
-svyttest( totexp20 ~ insured_december_31st , meps_design )
+svyttest( totexp22 ~ insured_december_31st , meps_design )
 svychisq( 
 	~ insured_december_31st + sex , 
 	meps_design 
 )
 glm_result <- 
 	svyglm( 
-		totexp20 ~ insured_december_31st + sex , 
+		totexp22 ~ insured_december_31st + sex , 
 		meps_design 
 	)
 
@@ -157,8 +157,8 @@ stopifnot( round( SE( result ) , 2 ) == 58.99 )
 library(srvyr)
 meps_srvyr_design <- as_survey( meps_design )
 meps_srvyr_design %>%
-	summarize( mean = survey_mean( totexp20 ) )
+	summarize( mean = survey_mean( totexp22 ) )
 
 meps_srvyr_design %>%
-	group_by( region20 ) %>%
-	summarize( mean = survey_mean( totexp20 ) )
+	group_by( region22 ) %>%
+	summarize( mean = survey_mean( totexp22 ) )
